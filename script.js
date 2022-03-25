@@ -11,6 +11,9 @@ function multiply(firstValue,secondValue) {
   return result
 };
 function divide(firstValue,secondValue) {
+  if (secondValue == 0){
+    return result = "Not a number"
+  }
   result = parseFloat(firstValue) / parseFloat(secondValue)
   return result
 };
@@ -76,6 +79,7 @@ operator.forEach((button) => {
   button.addEventListener('click', function saveOperator(e) {
     clicked = true;
     operation = e.target.innerText;
+    decimalPoint.disabled = false;
     if (typeof b != "undefined")
       clean = true;
       if (myArray.length != 0) {
@@ -89,6 +93,7 @@ equal.addEventListener("click", fEqual)
 function fEqual(){
   clicked = false;
   clean = false
+  decimalPoint.disabled = false;
   bottomDisplay.textContent = myArray[0]
 }
 
@@ -96,8 +101,15 @@ function fEqual(){
 const clear = document.querySelector(".top #idClear")
 clear.addEventListener("click", () => {
   clicked = false
+  decimalPoint.disabled = false;
   firstValue = bottomDisplay.textContent = ''
   secondValue = bottomDisplay.textContent = ''
   myArray = []
 })
+
+const decimalPoint = document.getElementById("decimalPoint")
+decimalPoint.addEventListener("click", () => {
+  decimalPoint.disabled = true;
+})
+decimalPoint.disabled = false;
 

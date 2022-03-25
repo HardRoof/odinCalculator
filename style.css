@@ -6,19 +6,106 @@ body{
   justify-content: center;
   margin: 0;
   flex-direction: column;
+  background-image: linear-gradient(to right, rgb(220, 150, 150) , rgb(165, 145, 230));
 }
 
 #hardCase {
   display: flex;
-  height: 500px;
-  width: 350px;
-  padding: 20px;
+  height: 600px;
+  width: 300px;
+  padding: 10px;
+  box-shadow: 0px 0px 5px 3px rgb(0 0 0 / 71%);
+  background-color: rgb(58, 55, 75);
+  border-radius: 30px;
+  
+}
+
+#bottomDisplay {
+  display: flex;
+  border-radius: 30px 30px 0px 0px;
+  height: 230px;
+  align-items: flex-end;
+  justify-content: flex-end;
+  font-family: Optima, sans-serif;
+  font-size: 60px;
+  padding-right: 16px;
+  background-color: white;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: 75% 25%;
+  grid-template-rows: repeat(5, 1fr);
+  cursor: pointer;
+  height: 380px;
+  border-radius: 0 0 30px 30px;
+}
+
+button {
+  cursor: pointer;
+  background-color: rgb(55, 51, 75);
+  color: whitesmoke;
+  border: none;
+  font-size: 20px;
+  font-family: Optima, sans-serif;
 }
 
 #touch {
-
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  border-radius: 5px;
 }
 
-#display {
+.rightSide{
+  grid-column: 2;
+  grid-row: span 4;
+  display: grid;
+}
 
+.rightSide button {
+  background-color: rgb(158, 145, 246);
+}
+
+.btnEqual {
+  grid-row: 5;
+  grid-column: 2;
+  background-color: rgb(129, 110, 182);
+  border-radius: 0 0 30px 0;
+}
+
+.middle {
+  grid-row: 2 / 6;
+}
+
+.top{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.top button {
+  background-color: rgb(76, 68, 96);
+}
+
+.middle {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+#zero{
+  grid-column: span 2;
+  border-radius: 0 0 0 30px;
+}
+
+#box {
+  height: 20px;
+  width: 150px;
+  margin-left: 75px;
+  background-color: rgb(58, 55, 75);
+  border-radius: 0 0 30px 30px;
+  position: fixed;
+}
+
+img {
+  margin-top: 5px;
 }
