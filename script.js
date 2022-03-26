@@ -1,3 +1,4 @@
+//Math functions performed by the calculator
 function sum(firstValue,secondValue) {
   result = parseFloat(firstValue) + parseFloat(secondValue)
   return result
@@ -18,8 +19,8 @@ function divide(firstValue,secondValue) {
   return result
 };
 
-//Create a new function operate that
-// takes an operator and 5 numbers and then calls one of the above functions on the numbers.
+
+//This function saves the result of the calculation into an array
 function operate(firstValue,operation,secondValue) {
   if (operation == '+') {
     return myArray[0] = sum(firstValue,secondValue)
@@ -37,13 +38,14 @@ function operate(firstValue,operation,secondValue) {
 
 //UI
 
+//This function is to import basic elements, to state original state of most triggers and variables, as well as, saves and display numbers selected
 const numbers = document.querySelectorAll(".middle button")
 const topDisplay = document.querySelector("#topDisplay")
 const bottomDisplay = document.querySelector("#bottomDisplay")
 clicked = false
 clean = true
 myArray = []
-let b
+let b = null
 numbers.forEach((button) => {
   button.addEventListener('click', function saveNumber(e) {
     if (clicked == false) {
@@ -54,62 +56,137 @@ numbers.forEach((button) => {
       }
       a = bottomDisplay.textContent += e.target.innerText
       firstValue = a
+      exceedsDisplay()
     }  
-    if (clicked == true) {
-      if (clean == true) {
+    if ((clicked == true) && (clean == true)) {
         bottomDisplay.textContent = ''
         clean = false
-      }
-      if (clean == false) {
+        for (let i = 0; i < operator.length; i++) {
+          operator[i].disabled = false;
+        }
+        equal.disabled = false
+    }
+    if (clean == false) {
         b = bottomDisplay.textContent += e.target.innerText
         secondValue = b
-        if (typeof myArray[0] === "undefined") {
-          operate(firstValue,operation,secondValue)
-        }
-        else {
-          operate(myArray[0],operation,secondValue)
-        }
+        exceedsDisplay()
       }
-    }
   })
 })
 
+//This function triggers some variables, does operation, show final value, and selects operator for next calculation
 const operator = document.querySelectorAll(".rightSide button")
 operator.forEach((button) => {
   button.addEventListener('click', function saveOperator(e) {
     clicked = true;
-    operation = e.target.innerText;
+    clean = true;
     decimalPoint.disabled = false;
-    if (typeof b != "undefined")
-      clean = true;
-      if (myArray.length != 0) {
-        bottomDisplay.textContent = myArray[0]
+    if ((b != null) && (myArray.length != 0)){
+      bottomDisplay.textContent = myArray[0]
+    }
+    if((b != null) && (typeof myArray[0] === "undefined")) {
+      operate(firstValue,operation,secondValue)
+      bottomDisplay.textContent = myArray[0]
+      exceedsDisplay()
+      for (let i = 0; i < operator.length; i++) {
+        operator[i].disabled = true;
       }
+    }
+    else if ((b != null) && (typeof myArray[0] != "undefined")) {
+      operate(myArray[0],operation,secondValue)
+      bottomDisplay.textContent = myArray[0]
+      exceedsDisplay()
+      for (let i = 0; i < operator.length; i++) {
+        operator[i].disabled = true;
+      }
+    }
+    operation = e.target.innerText; //the calculation goes first and only lastly it receives the operator selected for the next calculation
   })
 });
 
+//This function resets the program to its original state
+const clear = document.querySelector(".top #idClear")
+clear.addEventListener("click", eraseAll)
+function eraseAll() {
+    firstValue = bottomDisplay.textContent = ''
+    secondValue = bottomDisplay.textContent = ''
+    b = null
+    myArray = []
+    clicked = false
+    decimalPoint.disabled = false
+    equal.disabled = false;
+    for (let i = 0; i < operator.length; i++) {
+      operator[i].disabled = false;
+    }
+}
+
+//This function resets some triggers, does operation, and show final value
 const equal = document.querySelector(".btnEqual")
 equal.addEventListener("click", fEqual)
 function fEqual(){
   clicked = false;
   clean = false
   decimalPoint.disabled = false;
-  bottomDisplay.textContent = myArray[0]
+  if((b != null) && (typeof myArray[0] === "undefined")) {
+    operate(firstValue,operation,secondValue)
+    bottomDisplay.textContent = myArray[0]
+    exceedsDisplay()
+    equal.disabled = false;
+    }
+  else if ((b != null) && (typeof myArray[0] != "undefined")) {
+    operate(myArray[0],operation,secondValue)
+    bottomDisplay.textContent = myArray[0]
+    exceedsDisplay()
+    equal.disabled = false;
+  }
+  b = null //reset b, so it can use the number on display(myArray) w/ a number picked next in the keyboard and perform the next calculation.
 }
 
-
-const clear = document.querySelector(".top #idClear")
-clear.addEventListener("click", () => {
-  clicked = false
-  decimalPoint.disabled = false;
-  firstValue = bottomDisplay.textContent = ''
-  secondValue = bottomDisplay.textContent = ''
-  myArray = []
-})
-
+//This function is to disable '.' after being used one single time
 const decimalPoint = document.getElementById("decimalPoint")
 decimalPoint.addEventListener("click", () => {
   decimalPoint.disabled = true;
 })
-decimalPoint.disabled = false;
 
+//This function is to limit the amount of digit in the screen
+function exceedsDisplay(){ 
+  if (myArray.length != 0) {
+    if (myArray[0].toString().length > 8) {
+      eraseAll()
+      bottomDisplay.textContent = 'Infinity'
+    }
+  }
+  if (bottomDisplay.textContent.length > 8) {
+    eraseAll()
+  }
+}
+
+//This function is to turn positive into negative and vice-versa
+const positiveNegative = document.getElementById("idPositiveNegative")
+positiveNegative.addEventListener("click", () => {
+  if ((a == firstValue) && (a == bottomDisplay.textContent)) {
+    a = (a *- 1)
+    firstValue = a
+    return bottomDisplay.textContent = a
+  }
+  else if ((b == secondValue) && (b == bottomDisplay.textContent)) {
+    b = (b * -1)
+    secondValue = b
+    return bottomDisplay.textContent = b
+  }
+  else if ((myArray[0] == bottomDisplay.textContent)) {
+    myArray[0] = (myArray[0] * -1)
+    firstValue = myArray[0]
+    return bottomDisplay.textContent = myArray[0]
+  }
+})
+
+//This function is for the backspace button
+const backspace = document.getElementById("idBackspace")
+backspace.addEventListener("click", () => {
+  if (bottomDisplay.textContent != '') {
+    contentToBeErased = bottomDisplay.textContent
+    bottomDisplay.textContent = contentToBeErased.slice(0, -1) //erase last digit in the screen
+    return myArray[0] = bottomDisplay.textContent //use value left in the screen for the next calculation
+  }
+})
