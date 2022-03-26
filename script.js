@@ -151,12 +151,12 @@ decimalPoint.addEventListener("click", () => {
 //This function is to limit the amount of digit in the screen
 function exceedsDisplay(){ 
   if (myArray.length != 0) {
-    if (myArray[0].toString().length > 8) {
+    if ((myArray[0].toString().length > 8) && (myArray[0] != "Not a number")) {
       eraseAll()
       bottomDisplay.textContent = 'Infinity'
     }
   }
-  if (bottomDisplay.textContent.length > 8) {
+  if ((bottomDisplay.textContent.length > 8) && (myArray[0] != "Not a number")) {
     eraseAll()
   }
 }
@@ -190,3 +190,6 @@ backspace.addEventListener("click", () => {
     return myArray[0] = bottomDisplay.textContent //use value left in the screen for the next calculation
   }
 })
+
+
+"Not a number"
