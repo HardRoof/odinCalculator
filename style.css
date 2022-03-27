@@ -48,7 +48,10 @@ button {
   border: none;
   font-size: 20px;
   font-family: Optima, sans-serif;
+  margin: 0; /* To prevent Safari from adding margin to buttons */
 }
+/* To remove blue border from Chrome(see: "tinyurl.com/acasyrx2") */
+button:focus {outline:0;} 
 
 #touch {
   display: flex;

@@ -34,13 +34,12 @@ function operate(firstValue,operation,secondValue) {
   else if (operation == "÷") {
     return myArray[0] = divide(firstValue,secondValue)
   }
-}
+};
 
 //UI
 
 //This function is to import basic elements, to state original state of most triggers and variables, as well as, saves and display numbers selected
 const numbers = document.querySelectorAll(".middle button")
-const topDisplay = document.querySelector("#topDisplay")
 const bottomDisplay = document.querySelector("#bottomDisplay")
 clicked = false
 clean = true
@@ -72,9 +71,9 @@ numbers.forEach((button) => {
         exceedsDisplay()
       }
   })
-})
+});
 
-//This function triggers some variables, does operation, show final value, and selects operator for next calculation
+//Operator buttons: triggers 'variables', does operation, show final value, and selects operator for next calculation
 const operator = document.querySelectorAll(".rightSide button")
 operator.forEach((button) => {
   button.addEventListener('click', function saveOperator(e) {
@@ -118,9 +117,9 @@ function eraseAll() {
     for (let i = 0; i < operator.length; i++) {
       operator[i].disabled = false;
     }
-}
+};
 
-//This function resets some triggers, does operation, and show final value
+//Equal button: resets some triggers, does operation, and show final value
 const equal = document.querySelector(".btnEqual")
 equal.addEventListener("click", fEqual)
 function fEqual(){
@@ -140,13 +139,13 @@ function fEqual(){
     equal.disabled = false;
   }
   b = null //reset b, so it can use the number on display(myArray) w/ a number picked next in the keyboard and perform the next calculation.
-}
+};
 
 //This function is to disable '.' after being used one single time
 const decimalPoint = document.getElementById("decimalPoint")
 decimalPoint.addEventListener("click", () => {
   decimalPoint.disabled = true;
-})
+});
 
 //This function is to limit the amount of digit in the screen
 function exceedsDisplay(){ 
@@ -159,7 +158,7 @@ function exceedsDisplay(){
   if ((bottomDisplay.textContent.length > 8) && (myArray[0] != "Not a number")) {
     eraseAll()
   }
-}
+};
 
 //This function is to turn positive into negative and vice-versa
 const positiveNegative = document.getElementById("idPositiveNegative")
@@ -179,7 +178,7 @@ positiveNegative.addEventListener("click", () => {
     firstValue = myArray[0]
     return bottomDisplay.textContent = myArray[0]
   }
-})
+});
 
 //This function is for the backspace button
 const backspace = document.getElementById("idBackspace")
@@ -189,7 +188,26 @@ backspace.addEventListener("click", () => {
     bottomDisplay.textContent = contentToBeErased.slice(0, -1) //erase last digit in the screen
     return myArray[0] = bottomDisplay.textContent //use value left in the screen for the next calculation
   }
-})
+});
 
-
-"Not a number"
+//Keyboard function
+document.addEventListener("keydown", function keyboard(e) {
+  e.preventDefault(); //To prevent key 'enter' to send form
+  if (e.key == 0) document.getElementById("zero").click();
+  if (e.key == 1) document.getElementById("one").click();
+  if (e.key == 2) document.getElementById("two").click();
+  if (e.key == 3) document.getElementById("three").click();
+  if (e.key == 4) document.getElementById("four").click();
+  if (e.key == 5) document.getElementById("five").click();
+  if (e.key == 6) document.getElementById("six").click();
+  if (e.key == 7) document.getElementById("seven").click();
+  if (e.key == 8) document.getElementById("eight").click();
+  if (e.key == 9) document.getElementById("nine").click();
+  if (e.key == "Backspace" || e.key == "Delete") backspace.click();
+  if (e.key == "*") document.getElementById("division").click();
+  if (e.key == "/") document.getElementById("division").click();
+  if (e.key == "-") document.getElementById("minus").click();
+  if (e.key == "+") document.getElementById("plus").click();
+  if (e.key == "Enter" || e.key == "=") equal.click();
+  if (e.key == ".") decimalPoint.click();
+});
