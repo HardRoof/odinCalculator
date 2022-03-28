@@ -192,7 +192,6 @@ backspace.addEventListener("click", () => {
 
 //Keyboard function
 document.addEventListener("keydown", function keyboard(e) {
-  e.preventDefault(); //To prevent key 'enter' to send form
   if (e.key == 0) document.getElementById("zero").click();
   if (e.key == 1) document.getElementById("one").click();
   if (e.key == 2) document.getElementById("two").click();
@@ -204,10 +203,13 @@ document.addEventListener("keydown", function keyboard(e) {
   if (e.key == 8) document.getElementById("eight").click();
   if (e.key == 9) document.getElementById("nine").click();
   if (e.key == "Backspace" || e.key == "Delete") backspace.click();
-  if (e.key == "*") document.getElementById("division").click();
+  if (e.key == "*") document.getElementById("multiplication").click();
   if (e.key == "/") document.getElementById("division").click();
   if (e.key == "-") document.getElementById("minus").click();
   if (e.key == "+") document.getElementById("plus").click();
-  if (e.key == "Enter" || e.key == "=") equal.click();
+  if (e.key == "Enter" || e.key == "="){
+    e.preventDefault() //To prevent key 'enter' to send form
+    equal.click();
+  }
   if (e.key == ".") decimalPoint.click();
 });
